@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dice of Kalma — Cheatsheet / Шпаргалка</title>
+<style>
+:root{
+  --bg:#0e1116; --bg2:#161a20; --bg3:#1e242c; --border:#2a313b;
+  --text:#dfe4ea; --dim:#8b95a3; --accent:#b7c0cc;
+  --yellow:#ffd60a; --blue:#4cc9f0; --red:#ff4d6d; --purple:#c77dff;
+  --green:#4ade80;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.5;padding-bottom:40px}
+header{background:linear-gradient(135deg,#161a20,#23272e);padding:14px;border-bottom:2px solid var(--accent);position:sticky;top:0;z-index:100}
+h1{font-size:1.25rem;color:var(--accent);text-align:center;margin-bottom:8px}
+h1 span{font-size:.65rem;color:var(--dim);display:block}
+.langs{display:flex;justify-content:center;gap:6px;margin-bottom:10px}
+.langs button{padding:4px 14px;background:var(--bg2);border:1px solid var(--border);color:var(--dim);border-radius:14px;cursor:pointer;font-size:.78rem}
+.langs button.active{background:var(--accent);color:#111;border-color:var(--accent);font-weight:700}
+#search{width:100%;padding:10px 14px;background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:8px;font-size:.95rem;outline:none}
+#search:focus{border-color:var(--accent)}
+main{padding:12px;max-width:900px;margin:0 auto}
+.tabs{display:flex;gap:2px;margin-bottom:12px;border-bottom:1px solid var(--border);overflow-x:auto}
+.tab{padding:8px 12px;cursor:pointer;color:var(--dim);border-bottom:2px solid transparent;white-space:nowrap;font-size:.85rem}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.panel{display:none}.panel.active{display:block}
+.controls{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;align-items:center}
+.controls select{padding:7px 10px;background:var(--bg2);border:1px solid var(--border);color:var(--text);border-radius:6px;font-size:.85rem}
+.chip{padding:5px 10px;background:var(--bg2);border:1px solid var(--border);color:var(--dim);border-radius:14px;cursor:pointer;font-size:.78rem;display:inline-flex;align-items:center;gap:5px}
+.chip.active{background:var(--accent);color:#111;border-color:var(--accent);font-weight:600}
+.chip i{width:9px;height:9px;border-radius:50%;display:inline-block}
+.legend{font-size:.72rem;color:var(--dim);margin-bottom:10px}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;margin-bottom:8px;overflow:hidden}
+.chead{padding:11px 13px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.chead:hover{background:var(--bg3)}
+.cname{font-weight:600;font-size:.95rem}
+.cname small{color:var(--dim);font-weight:400;font-size:.72rem}
+.badges{display:flex;gap:5px;align-items:center;flex-shrink:0}
+.pbadge{font-size:.72rem;padding:2px 7px;border-radius:4px;font-weight:700}
+.pc-blue{background:rgba(59,130,246,.20);color:#7db2ff}
+.pc-azure{background:rgba(76,201,240,.16);color:#4cc9f0}
+.pc-green{background:rgba(74,222,128,.16);color:#4ade80}
+.pc-white{background:rgba(229,231,235,.13);color:#e5e7eb}
+.pc-yellow{background:rgba(255,214,10,.14);color:#ffd60a}
+.pc-orange{background:rgba(251,146,60,.16);color:#fb923c}
+.pc-red{background:rgba(255,77,109,.16);color:#ff4d6d}
+.pc-none{background:var(--bg3);color:var(--dim)}
+.fbadge{font-size:.72rem;padding:2px 7px;border-radius:4px;background:var(--bg3);color:var(--accent)}
+.chev{color:var(--dim);font-size:.75rem;transition:transform .2s}
+.card.open .chev{transform:rotate(180deg)}
+.cbody{padding:0 13px 13px;display:none}
+.card.open .cbody{display:block}
+.trig{background:var(--bg);padding:8px 10px;border-radius:6px;margin-bottom:9px;font-size:.84rem;border-left:3px solid var(--accent)}
+.stitle{font-size:.68rem;text-transform:uppercase;letter-spacing:1px;color:var(--dim);margin:9px 0 4px}
+.rw{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.rw div{font-size:.75rem;padding:4px 8px;border-radius:4px;background:var(--bg)}
+.rw .y{border-left:3px solid var(--yellow)}.rw .b{border-left:3px solid var(--blue)}
+.rw .r{border-left:3px solid var(--red)}.rw .p{border-left:3px solid var(--purple)}
+.fam{font-size:.8rem;background:var(--bg);padding:7px 10px;border-radius:6px;border:1px solid var(--border)}
+.fam b{color:var(--green);font-size:.95rem}
+.pattern{font-family:monospace;background:var(--bg);padding:6px 10px;border-radius:4px;font-size:.9rem;letter-spacing:1.5px;color:var(--accent);display:inline-block}
+.syns{display:flex;flex-wrap:wrap;gap:4px}
+.syn{background:var(--bg3);padding:4px 8px;border-radius:10px;font-size:.78rem;cursor:pointer;border:1px solid var(--border)}
+.syn:hover{background:var(--accent);color:#111}
+.tool{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:15px;margin-bottom:13px}
+.tool h3{color:var(--accent);margin-bottom:9px;font-size:.98rem}
+.tool label{display:block;font-size:.78rem;color:var(--dim);margin:7px 0 3px}
+.tool select,.tool input[type=number]{width:100%;padding:8px 10px;background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:6px;font-size:.9rem}
+.btn{width:100%;padding:10px;background:var(--accent);color:#111;border:none;border-radius:6px;font-weight:600;cursor:pointer;margin-top:9px;font-size:.9rem}
+.res{margin-top:11px;padding:11px;background:var(--bg);border-radius:6px;border:1px solid var(--green)}
+.res .big{font-size:1.6rem;font-weight:700;color:var(--green)}
+.res .det{font-size:.78rem;color:var(--dim);margin-top:4px}
+.dice{display:flex;gap:6px;margin:8px 0}
+.dice input{width:52px;text-align:center;font-size:1.15rem;padding:8px}
+.tblwrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.8rem}
+th{background:var(--bg3);padding:7px;text-align:left;color:var(--accent)}
+td{padding:6px 7px;border-top:1px solid var(--border)}
+td small{color:var(--dim)}
+.hit{display:inline-block;background:var(--bg3);border:1px solid var(--green);color:var(--green);padding:3px 8px;border-radius:10px;font-size:.78rem;margin:2px}
+.clrow{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;margin-bottom:5px;gap:8px}
+.clname{font-size:.88rem;font-weight:600;flex:1}
+.dots{display:flex;gap:5px}
+.dot{width:26px;height:26px;border-radius:50%;border:2px solid;cursor:pointer;opacity:.28;background:transparent}
+.dot.on{opacity:1}
+.dot.y{border-color:var(--yellow)}.dot.y.on{background:var(--yellow)}
+.dot.b{border-color:var(--blue)}.dot.b.on{background:var(--blue)}
+.dot.r{border-color:var(--red)}.dot.r.on{background:var(--red)}
+.dot.p{border-color:var(--purple)}.dot.p.on{background:var(--purple)}
+.clstat{font-size:.75rem;color:var(--dim);min-width:34px;text-align:right}
+.clstat.done{color:var(--green);font-weight:700}
+.sumbar{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:10px;font-size:.85rem;align-items:center}
+.sumbar b{color:var(--accent)}
+.note{font-size:.75rem;color:var(--dim);margin-top:8px}
+footer{max-width:900px;margin:20px auto 0;padding:14px;border-top:1px solid var(--border);font-size:.72rem;color:var(--dim);text-align:center}
+@media(max-width:600px){.rw{grid-template-columns:1fr}.dice input{width:42px;font-size:1rem}}
+</style>
+</head>
+<body>
+<header>
+<h1>☠ DICE OF KALMA<span id="subtitle"></span></h1>
+<div class="langs"><button id="langRu">RU</button><button id="langEn">EN</button></div>
+<input type="text" id="search" placeholder="">
+</header>
+<main>
+<div class="tabs">
+<div class="tab active" data-p="skulls" id="tabSkulls"></div>
+<div class="tab" data-p="cyber" id="tabCyber"></div>
+<div class="tab" data-p="levels" id="tabLevels"></div>
+<div class="tab" data-p="check" id="tabCheck"></div>
+</div>
+<div class="panel active" id="skulls"></div>
+<div class="panel" id="cyber"></div>
+<div class="panel" id="levels"></div>
+<div class="panel" id="check"></div>
+</main>
+<footer id="footer"></footer>
+<script>
+let LANG='ru';try{LANG=localStorage.getItem('dokLang')||'ru';}catch(e){}
+const T=(ru,en)=>LANG==='ru'?ru:en;
+const T1=[1,10,2,5,1],T2=[2,15,3,5,2],T3=[2,15,3,10,1],T4=[2,20,4,10,2],BG=[3,30,6,15,3],PT=[2,25,5,15,2],G0=[2,10,2,5,1],ZZ=[0,0,0,0,0];
+/* [ru, en, prob, probDisp, rewards, synergyIdx, [patternRu, patternEn], [triggerRu, triggerEn]] */
+const S=[
+["Рыцарь","Knight",100,"100%",T1,[40,6,42,53],["Любая Пара без перебросов на предпоследней руке (2 руки)","Any Pair, no rerolls, on the penultimate hand (2 hands left)"],["Разыграть руку при чётном числе оставшихся рук","Play a hand while the number of hands left is even"]],
+["Изобретатель","Inventor",35.75,"35.75%",T1,[35,60,25,44],["1 2 1 3 2","1 2 1 3 2"],["Кубик равен разнице двух соседей","A die equals the difference of its two neighbours"]],
+["Шипастый","Spiked",15.63,"15.63%",T2,[62,34,20,22],["1 2 3 4 5 (Стрит)","1 2 3 4 5 (Straight)"],["Средний кубик равен количеству нечётных","The middle die equals the number of odd dice"]],
+["С кастрюлей","Pot",9.8,"9.8%",T1,[65,15,63,55],["1 5 5 6 6 (сумма 23)","1 5 5 6 6 (sum 23)"],["Сумма кубиков больше 22","The sum of all dice is greater than 22"]],
+["Юльский","Yule",35,"~35%",T4,[45,12,70,6],["Использовать все руки до конца уровня","Use all hands by the end of the level"],["Начало уровня, если прошлый пройден без лишних рук","Start of a level if the previous one ended with no hands left"]],
+["Шахтёр","Miner",6.25,"6.25%",T3,[62,20,47,7],["1 1 1 1 1 / 2 2 2 2 2","1 1 1 1 1 / 2 2 2 2 2"],["Все кубики чётные или все нечётные","All dice even or all odd"]],
+["Слепой","Blind",100,"100%",T1,[53,0,42,40],["Любая Пара без перебросов на предпоследней руке","Any Pair, no rerolls, on the penultimate hand"],["Разыграть руку без перебросов","Play a hand without rerolling any die"]],
+["Пират","Pirate",59.81,"59.81%",T1,[15,44,47,55],["1 1 2 3 6","1 1 2 3 6"],["В руке есть кубик с числом 1","The hand contains a die showing 1"]],
+["Капитан","Captain",16.67,"16.67%",T1,[7,38,13,29],["Перебросить 1 кубик в 1 на последней руке","Reroll one die into 1 on the last hand"],["Переброс одного кубика в 1 (1 раз за руку)","Reroll exactly one die into 1 (once per hand)"]],
+["Со свечкой","Candle",100,"100%",T1,[59,50,37,39],["Фулл-хаус на последней руке после траты всех перебросов","Full House on the last hand after spending all rerolls"],["Разыграть руку с 0 оставшихся перебросов","Play a hand with zero rerolls left"]],
+["Лучник","Archer",11.27,"11.27%",T3,[51,68,69,44],["2 3 3 4 4","2 3 3 4 4"],["Разница между минимумом и максимумом меньше 3","Difference between smallest and largest die is less than 3"]],
+["Перевязанный","Bandaged",50,"~50%",T1,[47,41,37,7],["Перебросить всё из высокого броска в сумму <15","Reroll a high roll down to a sum below 15"],["Сумма руки меньше первоначальной","The hand sum is smaller than the initial roll"]],
+["Страж","Guard",100,"100%",T2,[59,9,50,37],["Любая рука на последней руке после траты всех перебросов","Any hand on the last hand after spending all rerolls"],["Первоначальный бросок на последней руке","Initial roll on the last hand of a level"]],
+["Шут","Jester",16.67,"16.67%",T1,[19,8,38,7],["Перебросить единицу в единицу","Reroll a 1 into a 1"],["Переброс кубика на то же число (1 раз за руку)","Reroll a die into the same number (once per hand)"]],
+["Провидец","Clairvoyant",2.78,"2.78%",T4,[26,61,71,56],["3 3 3 6 1 (переброс 3 кубиков в тройки)","3 3 3 6 1 (reroll 3 dice into 3s)"],["Переброс 3 кубиков в одно число (1 раз за руку)","Reroll three dice into the same number with one reroll (once per hand)"]],
+["Король","Royal",59.81,"59.81%",T1,[3,7,55,65],["1 5 5 6 6","1 5 5 6 6"],["В руке есть кубик с числом 6","The hand contains a die showing 6"]],
+["Лудоман","Gambler",95,"≥95%",G0,[66,24,25,55],["1 2 3 4 6 после руки выше рангом","1 2 3 4 6 after a higher-rank hand"],["Ранг руки меньше предыдущей","The hand rank is lower than the previous hand"]],
+["Безумец","Daredevil",95,"≥95%",G0,[54,48,69,61],["3 3 4 4 5 после Пары","3 3 4 4 5 after a Pair"],["Ранг руки больше предыдущей","The hand rank is higher than the previous hand"]],
+["Шулер","Swindler",95,"≥95%",T2,[53,6,7,0],["Любая Пара без перебросов после Пары","Any Pair, no rerolls, after a Pair"],["Ранг руки равен предыдущей","The hand rank equals the previous hand"]],
+["Ставщик","Bettor",66.7,"~66.7%",T1,[18,13,8,38],["Переброс 1 кубика внутри Пары без смены ранга","Reroll one die inside a Pair without changing rank"],["Переброс не изменил ранг руки (1 раз за руку)","A reroll that did not change the hand rank (once per hand)"]],
+["Оккультист","Occult",20.01,"20.01%",T4,[47,5,63,62],["1 1 1 1 1 / 5 5 5 5 5","1 1 1 1 1 / 5 5 5 5 5"],["Сумма кубиков кратна 5","The sum of all dice is divisible by 5"]],
+["Расколотый","Split",11.27,"11.27%",T4,[60,48,44,34],["1 2 3 2 1","1 2 3 2 1"],["Сумма первых двух равна сумме последних двух","Sum of the first two dice equals sum of the last two"]],
+["Учёный","Scholar",6.33,"6.33%",T4,[44,51,23,68],["2 3 3 4 4","2 3 3 4 4"],["Кубики по возрастанию или убыванию","Dice in ascending or descending order"]],
+["Торговец","Merchant",6.33,"6.33%",T2,[22,51,33,44],["Переброс в 1 2 3 4 5","Reroll into 1 2 3 4 5"],["Переброс создал порядок возрастания/убывания (1 раз)","A reroll arranged the dice in order (once per hand)"]],
+["Раздробленный","Fractured",6.17,"6.17%",BG,[25,55,7,15],["1 2 3 4 6","1 2 3 4 6"],["Рука образует Старший кубик","The hand is a High Die"]],
+["Палач","Executioner",48.23,"48.23%",T1,[24,55,7,15],["1 2 3 4 6","1 2 3 4 6"],["Каждый кубик отличается от соседних","Every die differs from its neighbours"]],
+["Просверлённый","Bolted",7.41,"7.41%",T3,[61,71,56,42],["3 3 3 6 1 (при 3 перебросах)","3 3 3 6 1 (with 3 rerolls left)"],["Три смежных кубика одинаковы","Three adjacent dice show the same number"]],
+["Вампир","Vampire",40.19,"40.19%",G0,[10,51,7,22],["1 2 3 3 3","1 2 3 3 3"],["Только один кубик с числом 2","Exactly one die shows 2"]],
+["Механический","Machine",59.8,"~59.8%",T1,[42,41,31,40],["3 3 3 1 2 при 3 перебросах","3 3 3 1 2 with 3 rerolls left"],["Кубик равен оставшимся перебросам","A die equals the number of rerolls left"]],
+["Автоматон","Automaton",16.67,"16.67%",T1,[46,8,7,38],["Переброс 1 кубика в 1 на последней руке","Reroll one die into 1 on the last hand"],["Переброс кубика в число, равное оставшимся рукам (1 раз)","Reroll a die into the number of hands left (once per hand)"]],
+["Карнавальный","Carnival",10.03,"10.03%",T4,[25,55,24,7],["1 3 5 2 6 после переброса","1 3 5 2 6 after a reroll"],["После переброса все соседи отличаются ≥2 (1 раз)","After a reroll all neighbours differ by 2 or more (once per hand)"]],
+["Троица","Trinity",100,"100%",T1,[28,40,41,42],["3 3 3 1 2 при 3 перебросах","3 3 3 1 2 with 3 rerolls left"],["Оставшиеся перебросы кратны 3 и не равны 0","Rerolls left are divisible by 3 and not zero"]],
+["Простреленный","Shot",48.23,"48.23%",T1,[61,56,21,48],["1 3 6 3 1","1 3 6 3 1"],["Средний кубик отличается от всех остальных","The middle die differs from all other dice"]],
+["Грибной","Fungal",3.71,"3.71%",T1,[24,23,66,22],["Переброс в 1 2 3 4 6","Reroll into 1 2 3 4 6"],["Переброс образовал Старший кубик или Стрит (1 раз)","A reroll formed a High Die or a Straight (once per hand)"]],
+["Тусовочный","Party",6.25,"6.25%",PT,[62,2,25,22],["1 2 3 4 5","1 2 3 4 5"],["Чётные и нечётные чередуются","Even and odd dice alternate"]],
+["Ботан","Nerd",20.13,"20.13%",T2,[1,60,25,44],["1 2 1 3 2","1 2 1 3 2"],["Кубик равен сумме двух соседей","A die equals the sum of its two neighbours"]],
+["Гик","Geek",16.7,"~≤16.7%",T2,[35,1,25,44],["Переброс 1 кубика в сумму соседей","Reroll one die into the sum of its neighbours"],["Переброс кубика в сумму двух соседей (1 раз)","Reroll a die into the sum of its two neighbours (once per hand)"]],
+["Плачущий","Weeping",100,"100%",T1,[9,50,39,73],["Любая рука после переброса всех кубиков","Any hand after rerolling every die"],["Все кубики переброшены хотя бы раз","Every die was rerolled at least once"]],
+["Бомба","Bomb",16.67,"16.67%",T1,[8,13,7,29],["Переброс 1 кубика в 1","Reroll one die into 1"],["Переброс 1 кубика в число, равное количеству переброшенных (1 раз)","Reroll one die into the number of dice rerolled (once per hand)"]],
+["Весёлый","Jolly",12,"~10–15%",T3,[50,9,59,37],["Рука после 3 перебросов с минимумом 3","A hand with minimum 3 after 3 rerolls"],["Минимальный кубик равен потраченным перебросам","The smallest die equals the rerolls spent on the hand"]],
+["Маска","Masque",100,"100%",T1,[31,28,41,0],["3 3 3 1 2 при 3 перебросах и 2 руках","3 3 3 1 2 with 3 rerolls and 2 hands left"],["Оставшихся перебросов больше, чем рук","Rerolls left exceed hands left"]],
+["Солдат","Trench",3,"<3%",T2,[28,31,47,40],["3 1 1 1 1 при 3 перебросах","3 1 1 1 1 with 3 rerolls left"],["Максимальный кубик не больше оставшихся перебросов","The largest die is less than or equal to rerolls left"]],
+["Задушенный","Choked",69.5,"~69.5%",T1,[28,31,57,40],["1 3 3 3 2 при 3 перебросах","1 3 3 3 2 with 3 rerolls left"],["Максимум одинаковых равен перебросам или рукам","The largest group of identical dice equals rerolls or hands left"]],
+["Диджей","DJ",27.78,"27.78%",T3,[52,55,7,47],["1 1 1 1 5 (1+5=6)","1 1 1 1 5 (1+5=6)"],["Сумма первого и последнего равна 6 или 8","Sum of the first and last dice is 6 or 8"]],
+["Офицер","Officer",59.81,"59.81%",T1,[22,51,68,10],["2 3 3 4 4","2 3 3 4 4"],["Кубик соответствует своему порядковому месту","A die equals its position in the hand"]],
+["Доктор","Doctor",100,"100%",T1,[4,58,70,12],["Автоматически на старте уровня","Automatic at level start"],["Начало каждого уровня","Start of every level"]],
+["Чаша","Drinking",43,"~27–60%",T1,[0,29,42,40],["Рука с кубиком = кол-ву оставшихся рук","A hand with a die equal to hands left"],["Минимальный или максимальный кубик равен оставшимся рукам","The smallest or largest die equals hands left"]],
+["Повар","Chef",22.15,"22.15%",T3,[20,5,7,41],["1 1 1 1 1","1 1 1 1 1"],["Сумма кубиков меньше 15","The sum of all dice is less than 15"]],
+["Оперный","Opera",23.15,"23.15%",T3,[21,60,44,34],["1 2 3 2 1","1 2 3 2 1"],["Рука образует Две пары","The hand is a Two Pair"]],
+["Виртуальный","Virtual",22.22,"22.22%",T1,[19,66,23,33],["Переброс 2 кубиков с суммой 8 или 10","Reroll two dice summing to 8 or 10"],["Сумма переброшенных кубиков равна 8 или 10 (1 раз)","The rerolled dice sum to 8 or 10 (once per hand)"]],
+["Принцесса","Princess",100,"100%",T1,[73,37,9,39],["Фулл-хаус после 3+ перебросов всех кубиков","Full House after 3+ rerolls of every die"],["На руку потрачено не менее 3 перебросов","At least three rerolls were spent on the hand"]],
+["Флорист","Florist",4.37,"4.37%",T3,[22,10,27,25],["1 1 2 3 3","1 1 2 3 3"],["Соседи отличаются не больше чем на 1","No die differs from a neighbour by more than 1"]],
+["Пилот","Pilot",15.2,"15.2%",T4,[43,64,55,7],["2 1 1 1 6","2 1 1 1 6"],["Сумма крайних больше суммы средних","Sum of the first and last exceeds the sum of the middle dice"]],
+["Рыбак","Fisher",46.3,"46.3%",T1,[6,0,42,46],["Любая Пара первоначальным броском","Any Pair on the initial roll"],["Первоначальный бросок образовал Пару","The initial roll forms a Pair"]],
+["Демон","Demon",47.5,"~47.5%",T2,[17,6,53,0],["Любая Пара первым броском после слабой руки","Any Pair on the initial roll after a weaker hand"],["Ранг первоначальной руки выше предыдущей","The initial roll outranks the previous hand"]],
+["Тактический","Tactical",66.74,"66.74%",T1,[7,15,64,25],["1 2 3 4 6","1 2 3 4 6"],["Разница между минимумом и максимумом больше 3","Difference between smallest and largest die is greater than 3"]],
+["Ритуальный","Ritual",33.33,"33.33%",T1,[61,32,21,48],["1 3 6 3 1 (сумма средних 12)","1 3 6 3 1 (middle sum 12)"],["Сумма трёх средних кратна 3","Sum of the three middle dice is divisible by 3"]],
+["Геймер","Gamer",11,"~8–14%",T2,[40,31,41,28],["2 3 3 3 1 при 3 перебросах","2 3 3 3 1 with 3 rerolls left"],["Сумма крайних равна рукам или перебросам","Sum of the first and last equals hands or rerolls left"]],
+["Космонавт","Astronaut",60,"~60%",BG,[45,4,70,12],["Экономить руки на предыдущем уровне","Save hands on the previous level"],["Начало уровня, если на прошлом осталось не менее половины рук","Start of a level if at least half the hands remained on the previous one"]],
+["Пощада","Mercy",100,"100%",T4,[9,50,37,12],["Последний переброс на последней руке","Spend the last reroll on the last hand"],["Последний переброс на последней руке (1 раз за уровень)","The last reroll spent on the last hand (once per level)"]],
+["Половинчатый","Half",19.75,"19.75%",T1,[21,1,25,44],["1 2 3 2 1","1 2 3 2 1"],["Разница первых двух равна разнице последних двух","Difference of the first two equals difference of the last two"]],
+["Вождь","Chieftain",44.44,"44.44%",T1,[71,26,56,42],["3 3 3 3 2","3 3 3 3 2"],["Среди трёх средних есть два одинаковых","Two of the three middle dice are equal"]],
+["Шаман","Shaman",38.04,"38.04%",T1,[34,2,20,22],["1 2 3 4 5 (9 > 6)","1 2 3 4 5 (9 > 6)"],["Сумма нечётных больше суммы чётных","Sum of odd dice exceeds sum of even dice"]],
+["Хакер","Hacker",31.71,"31.71%",T2,[47,5,20,7],["1 1 1 1 1 (сумма 5)","1 1 1 1 1 (sum 5)"],["Сумма кубиков — простое число","The sum of all dice is a prime number"]],
+["Лётчик","Ace",26.43,"26.43%",T3,[55,52,15,26],["1 1 1 1 6","1 1 1 1 6"],["Сумма трёх наименьших не больше наибольшего","Sum of the three smallest dice is at most the largest"]],
+["Бакалавр","Bachelor",23.6,"23.6%",T2,[3,60,55,15],["6 5 1 5 6 (5×5=25 ≥ 23)","6 5 1 5 6 (5×5=25 ≥ 23)"],["Произведение 2-го и 4-го не меньше суммы всех","Product of the 2nd and 4th dice is at least the total sum"]],
+["Дилер","Dealer",20,"~15–25%",T1,[16,24,33,55],["Переброс из Стрита в Старший кубик","Reroll from Straight into High Die"],["Переброс уменьшил ранг руки","A reroll lowered the hand rank"]],
+["Пустышка","Blank",0,"—",ZZ,[45,9,6,0],["Компенсируется гарантированными черепами","Compensated by guaranteed skulls"],["Не даёт ничего","Grants nothing"]],
+["Судья","Judge",13.17,"13.17%",T2,[10,69,44,51],["2 3 3 4 4","2 3 3 4 4"],["Нет кубиков 1 или 6","No dice show 1 or 6"]],
+["Сварщик","Welder",4.53,"4.53%",T3,[68,10,44,51],["2 3 3 4 4","2 3 3 4 4"],["Четыре кубика с числами 3 или 4","Four dice show 3 or 4"]],
+["Мушкетёр","Musketeer",100,"100%",T2,[53,40,6,0],["Любая Пара первым броском на половине рук","Any Pair on the initial roll at half hands left"],["Первоначальный бросок при половине оставшихся рук","Initial roll when half of the level's hands remain"]],
+["С шурупами","Drilled",13.58,"13.58%",T3,[72,61,21,60],["3 3 4 3 3","3 3 4 3 3"],["Среди средних два равны первому или последнему","Two of the three middle dice equal the first or last die"]],
+["С гвоздями","Nailed",7.02,"7.02%",T3,[71,21,60,43],["3 3 4 3 3","3 3 4 3 3"],["Первый, последний и ещё один кубик равны","The first, last and at least one other die are equal"]],
+["Королева","Queen",30,"~25–35%",T2,[50,37,9,39],["Фулл-хаус после 3+ перебросов всех кубиков","Full House after 3+ rerolls of every die"],["Уникальных чисел меньше, чем потраченных перебросов","Fewer unique values than rerolls spent on the hand"]]
+];
+const PC={};
+[["blue",["Рыцарь","Слепой","Со свечкой","Страж","Троица","Плачущий","Маска","Доктор","Принцесса","Пощада","Мушкетёр"]],
+ ["azure",["Лудоман","Безумец","Шулер"]],
+ ["green",["Пират","Перевязанный","Король","Ставщик","Палач","Механический","Простреленный","Задушенный","Офицер","Рыбак","Демон","Тактический","Космонавт"]],
+ ["white",["Изобретатель","Юльский","Вампир","Чаша","Ритуальный","Вождь","Шаман","Хакер","Королева"]],
+ ["yellow",["Оккультист","Ботан","Диджей","Повар","Оперный","Виртуальный","Лётчик","Бакалавр","Дилер"]],
+ ["orange",["Шипастый","Капитан","Лучник","Шут","Расколотый","Автоматон","Карнавальный","Гик","Бомба","Весёлый","Пилот","Половинчатый","Судья","С шурупами"]],
+ ["red",["С кастрюлей","Шахтёр","Провидец","Учёный","Торговец","Раздробленный","Просверлённый","Грибной","Тусовочный","Солдат","Флорист","Геймер","Сварщик","С гвоздями"]]
+].forEach(([k,arr])=>arr.forEach(n=>PC[n]=k));
+const pcOf=n=>PC[n]||'none';
+const PCMETA=[["blue","Синий","Blue","#3b82f6"],["azure","Лазурный","Azure","#4cc9f0"],["green","Зелёный","Green","#4ade80"],["white","Белый","White","#e5e7eb"],["yellow","Жёлтый","Yellow","#ffd60a"],["orange","Оранжевый","Orange","#fb923c"],["red","Красный","Red","#ff4d6d"]];
+const fp=r=>(r[1]+r[3])*(r[2]+r[4]);
+const nm=i=>LANG==='ru'?S[i][0]:S[i][1];
+let sortMode='name', pcF='all', q='';
+function renderSkulls(){
+  let list=S.map((s,i)=>({s,i}));
+  if(q){const qq=q.toLowerCase();list=list.filter(o=>(o.s[0]+o.s[1]+o.s[6].join(' ')+o.s[7].join(' ')+o.s[5].map(i=>S[i][0]+' '+S[i][1]).join(' ')).toLowerCase().includes(qq));}
+  if(pcF!=='all')list=list.filter(o=>pcOf(o.s[0])===pcF);
+  if(sortMode==='prob')list.sort((a,b)=>b.s[2]-a.s[2]);
+  else if(sortMode==='fp')list.sort((a,b)=>fp(b.s[4])-fp(a.s[4]));
+  else list.sort((a,b)=>a.i-b.i);
+  document.getElementById('skulls').innerHTML=
+  `<div class="controls">
+    <select id="sortSel">
+      <option value="name">${T('Сортировка: по списку','Sort: by list')}</option>
+      <option value="prob">${T('Сортировка: вероятность ↓','Sort: probability ↓')}</option>
+      <option value="fp">${T('Сортировка: очки семьи ↓','Sort: family points ↓')}</option>
+    </select>
+    <span class="chip ${pcF==='all'?'active':''}" data-pc="all">${T('Все','All')}</span>
+    ${PCMETA.map(([k,ru,en,h])=>`<span class="chip ${pcF===k?'active':''}" data-pc="${k}"><i style="background:${h}"></i>${T(ru,en)}</span>`).join('')}
+  </div>
+  <div class="legend">${T('Шкала вероятности: Синий 100% · Лазурный ~95% · Зелёный ~46–70% · Белый ~25–45% · Жёлтый ~20–28% · Оранжевый ~10–20% · Красный <10%.','Probability scale: Blue 100% · Azure ~95% · Green ~46–70% · White ~25–45% · Yellow ~20–28% · Orange ~10–20% · Red <10%.')}<br>
+  ${T('Вероятность триггера — шанс срабатывания с первоначального броска в начале уровня. 100% — награда гарантирована при выполненном условии. Значения с ~ обозначают диапазон в зависимости от условий (например, Чаша ~27–60%).','Trigger probability is the chance to trigger from the initial roll at the start of a level. 100% means the reward is guaranteed once the condition is met. Values with ~ indicate conditional ranges (e.g., Drinking ~27–60%).')}<br>
+  ${T('Очки семьи = (кости синего + кости фиолетового) × (множители красного + множители фиолетового).','Family points = (blue bones + purple bones) × (red mult + purple mult).')}</div>`+
+  (list.length?list.map(o=>{const s=o.s,r=s[4],B=r[1]+r[3],M=r[2]+r[4],pc=pcOf(s[0]);return `
+  <div class="card">
+    <div class="chead" onclick="this.parentElement.classList.toggle('open')">
+      <div class="cname">${nm(o.i)} <small>${LANG==='ru'?s[1]:s[0]}</small></div>
+      <div class="badges">
+        <span class="fbadge">${T('семья','fam')}: ${fp(r)}</span>
+        <span class="pbadge pc-${pc}">${s[3]}</span>
+        <span class="chev">▼</span>
+      </div>
+    </div>
+    <div class="cbody">
+      <div class="trig"><b>${T('Триггер:','Trigger:')}</b> ${T(s[7][0],s[7][1])}</div>
+      <div class="stitle">${T('Вероятность триггера (с первоначального броска)','Trigger probability (from the initial roll)')}</div>
+      <div><span class="pbadge pc-${pc}">${s[3]}</span></div>
+      <div class="stitle">${T('Награды по цветам','Rewards by color')}</div>
+      <div class="rw">
+        <div class="y">🟡 ${r[0]} ${T(r[0]>1&&r[0]<5?'переброса':'переброс',r[0]>1?'rerolls':'reroll')}</div>
+        <div class="b">🔵 ${r[1]} ${T('костей','bones')}</div>
+        <div class="r">🔴 ${r[2]} ${T('множителя','mult')}</div>
+        <div class="p">🟣 ${r[3]} ${T('костей','bones')} + ${r[4]} ${T('множ.','mult')}</div>
+      </div>
+      <div class="stitle">${T('Очки семьи','Family points')}</div>
+      <div class="fam">🔵${r[1]} + 🟣${r[3]} = ${B} ${T('костей','bones')} · 🔴${r[2]} + 🟣${r[4]} = ${M} ${T('множ.','mult')} → ${B} × ${M} = <b>${B*M}</b></div>
+      <div class="stitle">${T('Шаблон / логика','Pattern / logic')}</div><div class="pattern">${T(s[6][0],s[6][1])}</div>
+      <div class="stitle">${T('Синергии (семейство собирается целиком)','Synergies (collect the full family)')}</div>
+      <div class="syns">${s[5].map(x=>`<span class="syn" onclick="event.stopPropagation();document.getElementById('search').value='${S[x][0]}';q='${S[x][0]}';renderSkulls()">${nm(x)}</span>`).join('')}</div>
+    </div>
+  </div>`;}).join(''):`<div style="text-align:center;color:var(--dim);padding:40px">${T('Ничего не найдено','Nothing found')}</div>`);
+  document.getElementById('sortSel').value=sortMode;
+  document.getElementById('sortSel').onchange=e=>{sortMode=e.target.value;renderSkulls();};
+  document.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{pcF=c.dataset.pc;renderSkulls();});
+}
+document.getElementById('search').addEventListener('input',e=>{q=e.target.value;renderSkulls();});
+/* ---------- КИБЕРСПОРТ / CYBER ---------- */
+const HANDS=[["Старший кубик","High Die",5,1,1],["Пара","Pair",5,2,1],["Две пары","Two Pair",10,3,1],["Тройка","Three of a Kind",15,4,1],["Фулл-хаус","Full House",20,6,1],["Каре","Four of a Kind",25,8,1],["Стрит","Straight",25,10,1],["Пятёрка","Five of a Kind",30,14,2]];
+function isPrime(n){if(n<2)return false;for(let i=2;i*i<=n;i++){if(n%i===0)return false;}return true;}
+function rankIdx(v){const c={};v.forEach(x=>c[x]=(c[x]||0)+1);const m=Object.values(c).sort((a,b)=>b-a);
+ if(m[0]===5)return 7;if(m[0]===4)return 5;if(m[0]===3&&m[1]===2)return 4;if(m[0]===3)return 3;
+ if(m[0]===2&&m[1]===2)return 2;if(m[0]===2)return 1;
+ const s=[...v].sort((a,b)=>a-b);
+ if(m.length===5&&s[4]-s[0]===4)return 6;
+ return 0;}
+function analyze(v){
+ const sum=v.reduce((a,b)=>a+b,0),mn=Math.min(...v),mx=Math.max(...v);
+ const odds=v.filter(x=>x%2).length,sOdd=v.filter(x=>x%2).reduce((a,b)=>a+b,0);
+ const s=[...v].sort((a,b)=>a-b);
+ const distinct=new Set(v).size===5, has1=v.includes(1), has6=v.includes(6);
+ const r=[];const add=(c,n)=>{if(c)r.push(n);};
+ add(has1,7);add(has6,15);add(v.filter(x=>x===2).length===1,27);
+ add(!has1&&!has6,68);add(v.every(x=>x%2===0)||v.every(x=>x%2===1,5));
+ add(v.every(x=>x%2===0)||v.every(x=>x%2===1),"x");r.pop();
+ add(v.every(x=>x%2===0)||v.every(x=>x%2===1),5);
+ add(sOdd>sum-sOdd,62);add(sum%5===0,20);add(isPrime(sum),63);
+ add(sum<15,47);add(sum>22,3);add(mx-mn>3,55);add(mx-mn<3,10);
+ add(s[0]+s[1]+s[2]<=mx,64);add(v[1]*v[3]>=sum,65);
+ add(v[0]+v[4]===6||v[0]+v[4]===8,43);add(v[0]+v[4]>v[1]+v[2]+v[3],52);
+ add((v[1]+v[2]+v[3])%3===0,56);add(v[2]===odds,2);
+ add(Math.abs(v[0]-v[1])===Math.abs(v[3]-v[4]),60);add(v[0]+v[1]===v[3]+v[4],21);
+ const asc=v.every((x,i)=>i===0||v[i-1]<=x),desc=v.every((x,i)=>i===0||v[i-1]>=x);add(asc||desc,22);
+ add(v.every((x,i)=>i===0||Math.abs(v[i-1]-x)<=1),51);add(v.every((x,i)=>i===0||v[i-1]!==x),25);
+ add(v.every((x,i)=>i===0||(v[i-1]%2)!==(x%2)),34);add(v.some((x,i)=>x===i+1),44);
+ add([1,2,3].some(i=>v[i]===v[i-1]+v[i+1]),35);add([1,2,3].some(i=>v[i]===Math.abs(v[i-1]-v[i+1])),1);
+ add(v[0]===v[1]&&v[1]===v[2]||v[1]===v[2]&&v[2]===v[3]||v[2]===v[3]&&v[3]===v[4],26);
+ add(v[1]===v[2]||v[1]===v[3]||v[2]===v[3],61);
+ add([v[1],v[2],v[3]].filter(x=>x===v[0]||x===v[4]).length>=2,71);
+ add(v[0]===v[4]&&(v[1]===v[0]||v[2]===v[0]||v[3]===v[0]),72);
+ add(v[2]!==v[0]&&v[2]!==v[1]&&v[2]!==v[3]&&v[2]!==v[4],32);
+ add(v.filter(x=>x===3||x===4).length>=4,69);
+ add(rankIdx(v)===2,48);add(distinct&&has1&&has6&&rankIdx(v)===0,24);
+ return{sum,rk:rankIdx(v),r};
+}
+function calcSum(){
+ const v=[1,2,3,4,5].map(i=>Math.min(6,Math.max(1,parseInt(document.getElementById('d'+i).value)||1)));
+ const a=analyze(v);
+ document.getElementById('sumRes').innerHTML=`<div class="res"><div class="big">${T('Сумма:','Sum:')} ${a.sum} · ${T('Ранг:','Rank:')} ${T(HANDS[a.rk][0],HANDS[a.rk][1])}</div>
+ <div class="det" style="margin:6px 0">${T('Сработают сейчас:','Trigger now:')}</div>${a.r.length?a.r.map(x=>`<span class="hit">${nm(x)}</span>`).join(''):`<span class="det">${T('ничего из «кубиковых» триггеров','none of the dice-based triggers')}</span>`}
+ <div class="det" style="margin-top:8px">${T('Не проверяются здесь (зависят от перебросов, рук и фаз уровня): все остальные черепа.','Not checked here (depend on rerolls, hands and level phases): all other skulls.')}</div></div>`;
+}
+function calcProb(){
+ const D=+document.getElementById('pD').value,R=+document.getElementById('pR').value,G=document.getElementById('pG').value;
+ const p=G==='any'?1-Math.pow(5/6,D*R):Math.pow(1-Math.pow(5/6,R),D);
+ const col=p>0.7?'var(--green)':p>0.4?'var(--yellow)':'var(--red)';
+ document.getElementById('probRes').innerHTML=`<div class="res"><div class="big" style="color:${col}">${(p*100).toFixed(1)}%</div>
+ <div class="det">${D} ${T('куб.','dice')} × ${R} ${T('перебросов','rerolls')} · ${T('формула','formula')}: ${G==='any'?`1 − (5/6)^(${D}×${R})`:`(1 − (5/6)^${R})^${D}`}<br>
+ ${T('Это вероятность внутри руки при перебросах; она не связана с колонкой «вероятность триггера» (та считается с первоначального броска). Дисперсия реальна: даже 99% не гарантируют успех за один заход.','This is the in-hand reroll probability; it is unrelated to the trigger probability column (which is counted from the initial roll). Variance is real: even 99% does not guarantee success in a single attempt.')}</div></div>`;
+}
+function upTable(){
+ let html='<div class="tblwrap"><table><tr><th>'+T('Рука','Hand')+'</th>';
+ for(let l=1;l<=10;l++)html+=`<th>${T('Ур.','Lv.')}${l}</th>`;html+='</tr>';
+ HANDS.forEach(h=>{
+  html+=`<tr><td><b>${T(h[0],h[1])}</b></td>`;
+  for(let l=1;l<=10;l++){
+   const bones=h[2]+5*(l-1), mult=h[3]+h[4]*(l-1);
+   html+=`<td><b>${bones*mult}</b><br><small>${bones}×${mult}</small></td>`;
+  }
+  html+='</tr>';
+ });
+ html+='</table></div><div class="note">'+T('Точные данные игры: уровень 1 — база; каждый следующий уровень даёт +5 костей и +1 множитель; Пятёрка — +5 костей и +2 множителя за уровень (патч 1.5). В ячейке: очки (кости×множитель).','Exact in-game data: level 1 is the base; every further level grants +5 bones and +1 mult; Five of a Kind grants +5 bones and +2 mult per level (patch 1.5). Cell value: points (bones×mult).')+'</div>';
+ document.getElementById('upRes').innerHTML=html;
+}
+function buildCyber(){
+ document.getElementById('cyber').innerHTML=`
+ <div class="tool"><h3>🎲 ${T('Анализатор руки (сумма + триггеры)','Hand analyzer (sum + triggers)')}</h3>
+ <label>${T('Значения кубиков (1–6), позиции фиксированы:','Die values (1–6), positions fixed:')}</label>
+ <div class="dice"><input type="number" id="d1" min="1" max="6"><input type="number" id="d2" min="1" max="6"><input type="number" id="d3" min="1" max="6"><input type="number" id="d4" min="1" max="6"><input type="number" id="d5" min="1" max="6"></div>
+ <button class="btn" onclick="calcSum()">${T('Проверить руку','Check hand')}</button><div id="sumRes"></div></div>
+ <div class="tool"><h3>📐 ${T('Вероятность переброса в нужное число','Reroll probability for a target number')}</h3>
+ <label>${T('Кубиков перебрасывается:','Dice rerolled:')}</label><select id="pD"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+ <label>${T('Перебросов доступно:','Rerolls available:')}</label><select id="pR">${Array.from({length:20},(_,i)=>`<option>${i+1}</option>`).join('')}</select>
+ <label>${T('Цель:','Goal:')}</label><select id="pG"><option value="any">${T('Хотя бы один кубик станет нужным','At least one die becomes the target')}</option><option value="all">${T('Все кубики станут нужными','All dice become the target')}</option></select>
+ <button class="btn" onclick="calcProb()">${T('Рассчитать','Calculate')}</button><div id="probRes"></div></div>
+ <div class="tool"><h3>💰 ${T('Очки рук по уровням улучшений (1–10) — точные данные игры','Hand points by upgrade level (1–10) — exact in-game data')}</h3><div id="upRes"></div></div>`;
+ upTable();
+}
+/* ---------- УРОВНИ / LEVELS ---------- */
+const LV=[[1,160],[2,225],[3,320],[4,410],[5,520],[6,635],[7,750],[8,860],[9,975],[10,1090],[11,1820],[12,2045],[13,2275],[14,2545],[15,2820],[16,3090],[17,3365],[18,3635],[19,3955],[20,4275],[21,5455],[22,5910],[23,6365],[24,7045],[25,7725]];
+function buildLevels(){
+ document.getElementById('levels').innerHTML=`<div class="tblwrap"><table><tr><th>${T('Уровень','Level')}</th><th>${T('Лимит','Threshold')}</th><th>${T('Мин. 1-й руки','Min. first hand')}</th></tr>
+ ${LV.map(([u,l])=>`<tr><td><b>${u}</b></td><td>${l}</td><td>${Math.ceil(l/2)}</td></tr>`).join('')}</table></div>
+ <div class="note">${T('«Мин. 1-й руки» — половина лимита (округление вверх): при таком наборе на первой руке уровень закрывается тремя одинаковыми руками.','"Min. first hand" is half the threshold (rounded up): scoring that much on the first hand closes the level with three identical hands.')}</div>`;
+}
+/* ---------- ЧЕК-ЛИСТ / CHECKLIST ---------- */
+let CL={};try{CL=JSON.parse(localStorage.getItem('dokCL')||'{}')||{};}catch(e){CL={};}
+let clq='';
+const marksOf=i=>((CL[i]||[]).filter(Boolean).length);
+function saveCL(){try{localStorage.setItem('dokCL',JSON.stringify(CL));}catch(e){}}
+function buildCheck(){
+ document.getElementById('check').innerHTML=`
+ <div class="sumbar"><span>${T('Семейств собрано:','Families completed:')} <b id="clDone">0</b></span><span>${T('Цветов взято:','Colors taken:')} <b id="clMarks">0</b></span>
+ <span style="margin-left:auto;cursor:pointer;color:var(--red)" id="clReset">${T('сброс','reset')}</span></div>
+ <input type="text" id="clsearch" placeholder="${T('➕ Найти череп и отметить взятые цвета...','➕ Find a skull and mark the colors taken...')}" value="${clq}" style="width:100%;padding:9px 12px;background:var(--bg2);border:1px solid var(--border);color:var(--text);border-radius:8px;margin-bottom:10px">
+ <div id="clrows"></div>
+ <div class="tool" style="margin-top:14px"><h3>💡 ${T('Кого добрать (синергия с отмеченными)','What to pick next (synergy with marked)')}</h3><div id="clSugg" class="syns"></div></div>
+ <div class="note">${T('Пустой поиск — показываются только отмеченные черепа. После отметки цвета поиск сбрасывается, и череп остаётся в списке. ✓ — семейство собрано полностью (4 цвета). Нажатие на подсказку подставляет имя в поиск. Данные хранятся локально, оффлайн.','An empty search shows only marked skulls. After marking a color the search resets and the skull stays in the list. ✓ means a complete family (4 colors). Clicking a suggestion puts the name into the search. Data is stored locally, offline.')}</div>`;
+ document.getElementById('clsearch').addEventListener('input',e=>{clq=e.target.value;renderCL();});
+ document.getElementById('clReset').onclick=()=>{if(confirm(T('Сбросить весь чек-лист?','Reset the whole checklist?'))){CL={};saveCL();renderCL();}};
+ renderCL();
+}
+function renderCL(){
+ const qq=clq.trim().toLowerCase();
+ const idxs=qq
+   ? S.map((s,i)=>i).filter(i=>(S[i][0]+' '+S[i][1]).toLowerCase().includes(qq))
+   : S.map((s,i)=>i).filter(i=>marksOf(i)>0);
+ document.getElementById('clrows').innerHTML=idxs.length?idxs.map(i=>{
+   const s=S[i],st=CL[i]||[0,0,0,0],n=st.filter(Boolean).length;
+   return `<div class="clrow"><div class="clname">${nm(i)} <span class="pbadge pc-${pcOf(s[0])}" style="margin-left:6px">${s[3]}</span></div>
+   <div class="dots">${['y','b','r','p'].map((c,k)=>`<span class="dot ${c} ${st[k]?'on':''}" onclick="tg(${i},${k})"></span>`).join('')}</div>
+   <div class="clstat ${n===4?'done':''}">${n===4?'✓':n+'/4'}</div></div>`;
+ }).join(''):`<div style="text-align:center;color:var(--dim);padding:20px">${qq?T('Ничего не найдено','Nothing found'):T('Ничего не выбрано. Введите имя черепа в поиск выше и отметьте взятые цвета.','Nothing selected yet. Type a skull name in the search above and mark the colors taken.')}</div>`;
+ const done=S.map((s,i)=>i).filter(i=>marksOf(i)===4).length;
+ const marks=Object.values(CL).reduce((a,v)=>a+(Array.isArray(v)?v.filter(Boolean).length:0),0);
+ document.getElementById('clDone').textContent=done;
+ document.getElementById('clMarks').textContent=marks;
+ const sel=S.map((s,i)=>i).filter(i=>marksOf(i)>0);
+ const tally={};
+ sel.forEach(i=>S[i][5].forEach(j=>{
+   if(marksOf(j)>0)return;
+   tally[j]=tally[j]||{n:0,from:[]};
+   tally[j].n++;tally[j].from.push(nm(i));
+ }));
+ const sug=Object.entries(tally).sort((a,b)=>b[1].n-a[1].n||fp(S[b[0]][4])-fp(S[a[0]][4])).slice(0,10);
+ document.getElementById('clSugg').innerHTML=sug.length?sug.map(([j,o])=>
+   `<span class="syn" onclick="clq='${S[j][0]}';document.getElementById('clsearch').value='${S[j][0]}';renderCL()">${nm(j)} <b style="color:var(--green)">×${o.n}</b> <small style="color:var(--dim)">← ${o.from.join(', ')}</small></span>`
+ ).join(''):`<span class="note">${T('Отметьте черепа — здесь появятся подсказки по синергии с уже выбранными.','Mark skulls — synergy suggestions with the current selection will appear here.')}</span>`;
+}
+function tg(i,k){
+ CL[i]=CL[i]||[0,0,0,0];
+ CL[i][k]=CL[i][k]?0:1;
+ saveCL();
+ if(CL[i][k]&&clq){clq='';const inp=document.getElementById('clsearch');if(inp)inp.value='';}
+ renderCL();
+}
+/* ---------- ОБЩЕЕ / COMMON ---------- */
+function buildStatic(){
+ document.getElementById('subtitle').textContent=T('· оффлайн-шпаргалка · версия игры 1.6.3','· offline cheatsheet · game version 1.6.3');
+ document.getElementById('search').placeholder=T('🔍 Поиск: череп, синергия, шаблон, триггер...','🔍 Search: skull, synergy, pattern, trigger...');
+ document.getElementById('tabSkulls').textContent=T('💀 Черепа','💀 Skulls');
+ document.getElementById('tabCyber').textContent=T('🎮 Киберспорт','🎮 Cyber-sport');
+ document.getElementById('tabLevels').textContent=T('📊 Уровни','📊 Levels');
+ document.getElementById('tabCheck').textContent=T('✅ Чек-лист','✅ Checklist');
+ document.getElementById('langRu').classList.toggle('active',LANG==='ru');
+ document.getElementById('langEn').classList.toggle('active',LANG==='en');
+ document.getElementById('footer').innerHTML=T(
+ 'Создано пользователем mellamoandrey с помощью Qwen3.8-Max AI. Файл сделан на энтузиазме для личного пользования; автор ни на что не претендует. Файл и его код могут свободно изменяться другими пользователями. Информация актуальна для версии игры 1.6.3.',
+ 'Created by mellamoandrey with Qwen3.8-Max AI. Made with enthusiasm for personal use; no rights claimed. The file and its code may be freely modified by anyone. Information is current for game version 1.6.3.');
+}
+function renderAll(){buildStatic();renderSkulls();buildCyber();buildLevels();buildCheck();}
+document.getElementById('langRu').onclick=()=>{LANG='ru';try{localStorage.setItem('dokLang',LANG);}catch(e){}renderAll();};
+document.getElementById('langEn').onclick=()=>{LANG='en';try{localStorage.setItem('dokLang',LANG);}catch(e){}renderAll();};
+document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
+ document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+ document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+ t.classList.add('active');document.getElementById(t.dataset.p).classList.add('active');
+});
+renderAll();
+</script>
+</body>
+</html>
